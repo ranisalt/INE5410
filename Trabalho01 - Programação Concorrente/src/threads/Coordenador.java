@@ -26,18 +26,16 @@ public class Coordenador {
 	}
 	
 	public void bufferNaoVazio() {
-		Leitor leitorNaoConluido = this.getLeitorNaoConcluido();
-		System.out.println(leitorNaoConluido.getName()+" foi interrompido");
-		leitorNaoConluido.interrupt();
 		
+		this.getLeitorNaoConcluido().getFuture().cancel(true);	
 	}
 	
 	public void bufferNaoCheio() {
-		this.getEscritorNaoConcluido().interrupt();
+		this.getEscritorNaoConcluido().getFuture().cancel(true);
 	}
 
 	public Escritor getEscritorNaoConcluido() {
-		for(int i=0 ; i < this.escritores.length + 1 ; i++) {
+		for(int i=0 ; i < this.escritores.length ; i++) {
 			if(!this.escritores[i].estaConcluido()) {
 				return this.escritores[i];
 			}
@@ -46,7 +44,7 @@ public class Coordenador {
 	}
 
 	public Leitor getLeitorNaoConcluido() {
-		for(int i=0 ; i < this.leitores.length + 1 ; i++){
+		for(int i=0 ; i < this.leitores.length ; i++){
 			if(!this.leitores[i].estaConcluido()) {
 				return this.leitores[i];
 			}	

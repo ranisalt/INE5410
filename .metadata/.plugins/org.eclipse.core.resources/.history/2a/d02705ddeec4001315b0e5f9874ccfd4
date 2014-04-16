@@ -1,0 +1,44 @@
+package threads;
+
+public class Escritor extends Thread {
+	private Buffer buffer;
+	private Coordenador coordenador;
+	private boolean concluido;
+
+	public Escritor (Coordenador coordenador, Buffer buffer, String nome){
+		super(nome);
+		this.coordenador = coordenador;
+		this.buffer = buffer;
+		this.concluido = false;
+	}
+
+	public void run(){
+		while(!concluido) {
+			if(this.buffer.posicaoVazia() != -1){
+				this.escrever();
+				this.concluido = true;
+				this.coordenador.bufferNaoVazio();
+				System.out.println("===========================> "+this.getName()+" chegou ao fim!");
+				
+			} else {
+				try {
+					System.out.println(this.getName()+" foi dormir");
+					sleep(1000);
+				}catch(Exception e) {
+					System.out.println("Escritor foi interrompido");
+				}
+			}
+		}
+	}
+
+	public void escrever() {
+		int numero = (int)(Math.random()*100);
+		this.buffer.escrever(this.buffer.posicaoVazia(), numero);
+		System.out.println(numero+" foi escrito. Pelo "+this.getName());
+
+	}
+	
+	public boolean estaConcluido() {
+		return this.concluido;
+	}
+}

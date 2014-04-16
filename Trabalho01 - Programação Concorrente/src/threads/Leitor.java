@@ -1,9 +1,12 @@
 package threads;
 
+import java.util.concurrent.Future;
+
 public class Leitor extends Thread {
 	private Buffer buffer;
 	private Coordenador coordenador;
 	private boolean concluido;
+	private Future f;
 
 	public Leitor (Coordenador coordenador, Buffer buffer, String nome){
 		super(nome);
@@ -12,18 +15,23 @@ public class Leitor extends Thread {
 		this.concluido = false;
 	}
 	
+	public void recebeFuture(Future f) {
+		this.f = f;
+	}
+	
 	public void run(){
 		while(!concluido) {
 			if(this.buffer.posicaoOcupada() != -1){
 				this.ler();
 				this.concluido = true;
 				this.coordenador.bufferNaoCheio();
+				System.out.println("===========================> "+this.getName()+" chegou ao fim!");
 			} else {
 				try {
 					System.out.println(this.getName()+" foi dormir");
-					sleep(10000);
+					sleep(6000);
 				}catch(Exception e) {
-					System.out.println("Leitor foi interrompido");
+					System.out.println(this.getName()+" foi interrompido");
 				}
 			}
 		}
@@ -36,5 +44,10 @@ public class Leitor extends Thread {
 	
 	public boolean estaConcluido() {
 		return this.concluido;
+	}
+
+	public Future getFuture() {
+		// TODO Auto-generated method stub
+		return this.f;
 	}
 }

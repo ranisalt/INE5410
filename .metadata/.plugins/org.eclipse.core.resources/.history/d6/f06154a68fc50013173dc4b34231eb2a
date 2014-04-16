@@ -1,0 +1,38 @@
+package threads;
+
+import java.util.concurrent.*;
+
+public class Principal {
+	
+	public static void main(String[] args) {
+		Buffer buffer = new Buffer();
+		Coordenador coordenador = new Coordenador();
+		Escritor [] arrayEscritores = new Escritor[100];
+		Leitor [] arrayLeitores = new Leitor[100];
+		
+		ScheduledExecutorService escritores = Executors.newSingleThreadScheduledExecutor();
+		for(int i = 0 ; i < 100 ; i++) {
+			Escritor escritor = new Escritor(coordenador, buffer, "Escritor"+i);
+			arrayEscritores[i] = escritor;
+			//escritores.schedule(escritor, i*100, TimeUnit.MILLISECONDS);
+		}
+		coordenador.adicionarEscritores(arrayEscritores);
+	
+		for(int i = 0 ; i < 100 ; i++) {
+			escritores.schedule(coordenador.getEscritores()[i], i*100, TimeUnit.MILLISECONDS);
+		}
+		
+		ExecutorService leitores = Executors.newFixedThreadPool(4);
+		for(int i = 0 ; i < 100 ; i++) {
+			Leitor leitor = new Leitor(coordenador, buffer, "Leitor"+i);
+			arrayLeitores[i] = leitor;
+			//leitores.execute(leitor);
+		}
+		coordenador.adicionarLeitores(arrayLeitores);
+		
+		for(int i = 0 ; i < 100 ; i++) {
+			leitores.execute(coordenador.getLeitores()[i]);
+		}
+	
+	}
+}

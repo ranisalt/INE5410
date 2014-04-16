@@ -50,6 +50,7 @@ public class Escritor extends Thread {
 	}
 
 	public Future getFuture() {
+		// TODO Auto-generated method stub
 		return this.f;
 	}
 }

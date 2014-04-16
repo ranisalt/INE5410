@@ -24,13 +24,13 @@ public class Principal {
 		}
 		
 		ExecutorService leitores = Executors.newFixedThreadPool(4);
-		for(int i = 0 ; i < 100 ; i++) {
+		for(int i = 0 ; i < 98 ; i++) {
 			Leitor leitor = new Leitor(coordenador, buffer, "Leitor"+i);
 			arrayLeitores[i] = leitor;
 		}
 		coordenador.adicionarLeitores(arrayLeitores);
 		
-		for(int i = 0 ; i < 100 ; i++) {
+		for(int i = 0 ; i < 98 ; i++) {
 			fLeitor = leitores.submit(coordenador.getLeitores()[i]);
 			coordenador.getLeitores()[i].recebeFuture(fLeitor);
 		}

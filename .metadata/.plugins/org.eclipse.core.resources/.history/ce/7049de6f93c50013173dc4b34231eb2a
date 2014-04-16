@@ -34,5 +34,8 @@ public class Principal {
 			fLeitor = leitores.submit(coordenador.getLeitores()[i]);
 			coordenador.getLeitores()[i].recebeFuture(fLeitor);
 		}
+		
+		System.out.println("ACABOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOU");
+	
 	}
 }

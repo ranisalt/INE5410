@@ -26,6 +26,7 @@ public class Coordenador {
 	}
 	
 	public void bufferNaoVazio() {
+		
 		this.getLeitorNaoConcluido().getFuture().cancel(true);	
 	}
 	

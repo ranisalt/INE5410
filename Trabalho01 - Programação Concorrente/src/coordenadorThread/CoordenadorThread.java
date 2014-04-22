@@ -5,7 +5,6 @@ public class CoordenadorThread extends Thread {
 	private Escritor[] escritores;
 	private Leitor[] leitores;
 	private Buffer buffer;
-	private boolean concluido;  
 	public void run(){
 		while(true) {		
 			if(buffer.naoCheio()) {

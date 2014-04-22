@@ -26,7 +26,9 @@ public class Leitor extends Thread {
 				this.concluido = true;
 				this.coordenador.bufferNaoCheio();
 				System.out.println("===========================> "+this.getName()+" chegou ao fim!");
-				System.out.println(this.buffer.toString());
+				if(this.getName().equals("Leitor99")) {
+					System.out.println("\n\n\n\n FINAL DO PROGRAMA");
+				}
 			} else {
 				try {
 					System.out.println(this.getName()+" foi dormir");

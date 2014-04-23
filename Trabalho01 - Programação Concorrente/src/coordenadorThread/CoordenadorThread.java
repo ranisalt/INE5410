@@ -6,7 +6,7 @@ public class CoordenadorThread extends Thread {
 	private Leitor[] leitores;
 	private Buffer buffer;
 	public void run(){
-		while(true) {		
+		while(!this.fim()) {		
 			if(buffer.naoCheio()) {
 				this.bufferNaoCheio();
 			}
@@ -20,7 +20,7 @@ public class CoordenadorThread extends Thread {
 			}
 		}
 	}
-
+	
 	public CoordenadorThread(Buffer buffer) {
 		this.buffer = buffer;
 	}
@@ -40,14 +40,22 @@ public class CoordenadorThread extends Thread {
 	public Leitor[] getLeitores() {
 		return this.leitores;
 	}
+	
+	public boolean fim() {
+		Leitor leitorNaoConcluido = this.getLeitorNaoConcluido();
+		if(leitorNaoConcluido == null) {
+			return true;
+		}
+		return false;
+	}
 
 	public void bufferNaoVazio() {
 		Leitor leitorNaoConcluido = this.getLeitorNaoConcluido();
 		if(leitorNaoConcluido.getState().toString().equalsIgnoreCase("sleep")) {
-			leitorNaoConcluido.getFuture().cancel(true);
+			leitorNaoConcluido.interrupt();
 		}
 		leitorNaoConcluido.run();
-
+		
 
 	}
 
@@ -55,7 +63,7 @@ public class CoordenadorThread extends Thread {
 		Escritor escritorNaoConcluido = this.getEscritorNaoConcluido();
 		try{
 			if(escritorNaoConcluido.getState().toString().equalsIgnoreCase("sleep")) {
-				escritorNaoConcluido.getFuture().cancel(true);
+				escritorNaoConcluido.interrupt();
 			}
 			escritorNaoConcluido.run();
 		} catch(NullPointerException e) {

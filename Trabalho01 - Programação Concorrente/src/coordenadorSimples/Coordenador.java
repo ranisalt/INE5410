@@ -34,7 +34,7 @@ public class Coordenador {
 	}
 
 	public Escritor getEscritorNaoConcluido() {
-		for(int i=0 ; i < 101 ; i++) {
+		for(int i = 0 ; i < 101 ; i++) {
 			if(!this.escritores[i].estaConcluido()) {
 				return this.escritores[i];
 			}
@@ -43,7 +43,7 @@ public class Coordenador {
 	}
 
 	public Leitor getLeitorNaoConcluido() {
-		for(int i=0 ; i < 100 ; i++){
+		for(int i = 0 ; i < 100 ; i++){
 			if(!this.leitores[i].estaConcluido()) {
 				return this.leitores[i];
 			}	

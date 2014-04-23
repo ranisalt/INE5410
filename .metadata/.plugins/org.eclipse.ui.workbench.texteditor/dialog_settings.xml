@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="291" key="DIALOG_WIDTH"/>
-		<item value="98" key="DIALOG_Y_ORIGIN"/>
+		<item value="122" key="DIALOG_Y_ORIGIN"/>
+		<item value="417" key="DIALOG_X_ORIGIN"/>
 		<item value="433" key="DIALOG_HEIGHT"/>
-		<item value="539" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Escritor87" key="selection"/>
+		<item value="Leitor0" key="selection"/>
 		<list key="findhistory">
+			<item value="leitor0"/>
+			<item value="Escritor  foi dormir"/>
+			<item value="Escritor 20 foi dormir"/>
+			<item value="foi dormir"/>
+			<item value="Escritor89"/>
+			<item value="Escritor91"/>
 			<item value="Escritor87"/>
 			<item value="Escritor90"/>
-			<item value="Escritor91"/>
-			<item value="foi dormir"/>
-			<item value="foi interrompido"/>
-			<item value="coordenador"/>
-			<item value="interrompido"/>
-			<item value="0"/>
 		</list>
 		<list key="replacehistory">
 		</list>

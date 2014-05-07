@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Leitor0" key="selection"/>
+		<item value="Escritor2" key="selection"/>
 		<list key="findhistory">
+			<item value="Escritor2"/>
+			<item value="Escritor0"/>
+			<item value="Escritor1"/>
 			<item value="leitor0"/>
 			<item value="Escritor  foi dormir"/>
 			<item value="Escritor 20 foi dormir"/>
 			<item value="foi dormir"/>
 			<item value="Escritor89"/>
-			<item value="Escritor91"/>
-			<item value="Escritor87"/>
-			<item value="Escritor90"/>
 		</list>
 		<list key="replacehistory">
 		</list>

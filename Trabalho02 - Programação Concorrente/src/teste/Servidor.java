@@ -1,4 +1,4 @@
-package banco;
+package teste;
 
 public class Servidor {
 	

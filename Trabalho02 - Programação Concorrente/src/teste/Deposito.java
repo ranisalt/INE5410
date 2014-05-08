@@ -1,4 +1,4 @@
-package banco;
+package teste;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -13,16 +13,26 @@ public class Deposito extends Thread {
 	}
 	@Override
 	public void run() {
-		try {
-			int valor = entrada.readInt();
-			for(int i = 0; i<servidores.length; i++) {
-				this.servidores[i].depositar(valor);
+			while(true) {
+				try{
+					System.out.println(this.lerValor());
+				}catch(Exception e) {
+					
+				}
+				
 			}
+	}
+	
+	public int lerValor() {
+		try {
+			return entrada.readInt();
 		} catch (IOException e) {
 			System.out.println("exception Thread servidor"+this.getName());
 			e.printStackTrace();
 		}
+		return 0;
 	}
+	
 }
 
 

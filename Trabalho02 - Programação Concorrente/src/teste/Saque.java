@@ -1,13 +1,13 @@
-package banco;
+package teste;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 
-public class Correcao extends Thread {
+public class Saque extends Thread{
 	private Servidor[] servidores = new Servidor[3];
 	private DataInputStream entrada;
-	public Correcao(PipedInputStream entrada, Servidor[] servidores)  {
+	public Saque(PipedInputStream entrada, Servidor[] servidores)  {
 		this.servidores = servidores;
 		this.entrada = new DataInputStream(entrada);
 	}
@@ -15,8 +15,9 @@ public class Correcao extends Thread {
 	public void run() {
 		try {
 			int valor = entrada.readInt();
+			System.out.println(valor);
 			for(int i = 0; i<servidores.length; i++) {
-				this.servidores[i].correcao(valor);
+				this.servidores[i].sacar(valor);
 			}
 		} catch (IOException e) {
 			System.out.println("exception Thread servidor"+this.getName());

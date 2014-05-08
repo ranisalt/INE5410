@@ -16,12 +16,17 @@ public class Cliente extends Thread {
 	@Override
 	public void run() {
 		for(int i = 0; i == 40; i++) {
-			try {
-				saida.writeInt(this.valorSaida);
-				saida.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			this.enviarValor();
+		}
+	}
+	
+	public void enviarValor() {
+		try {
+			saida.writeInt(this.valorSaida);
+			saida.flush();
+		} catch (IOException e) {
+			System.out.println("Caiu no catch do cliente");
+			e.printStackTrace();
 		}
 	}
 }

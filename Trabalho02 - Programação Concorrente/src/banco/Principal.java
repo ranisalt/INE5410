@@ -7,6 +7,9 @@ import java.io.PipedOutputStream;
 public class Principal {
 
 	public static void main(String[] args) {
+		Deposito tDeposito = null;
+		Saque tSaque = null;
+		Correcao tCorrecao = null;
 		Servidor[] servidores = new Servidor[3]; 
 		for(int i=1; i == 3 ; i++) {
 			//criando servidores
@@ -24,9 +27,9 @@ public class Principal {
 			PipedInputStream entrada3 = new PipedInputStream(correcao);
 		
 			//criando ThreadServidor
-			Deposito tServidor1 = new Deposito(entrada1, servidores);
-			Saque tServidor2 = new Saque(entrada2, servidores);
-			Correcao tServidor3 = new Correcao(entrada3, servidores);
+			tDeposito = new Deposito(entrada1, servidores);
+			tSaque = new Saque(entrada2, servidores);
+			tCorrecao = new Correcao(entrada3, servidores);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -35,6 +38,5 @@ public class Principal {
 		Cliente cliente1 = new Cliente(deposito, 10);
 		Cliente cliente2 = new Cliente(saque, -3);
 		Cliente cliente3 = new Cliente(correcao, 10);
-		
 	}
 }

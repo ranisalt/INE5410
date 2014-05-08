@@ -15,6 +15,7 @@ public class Saque extends Thread{
 	public void run() {
 		try {
 			int valor = entrada.readInt();
+			System.out.println(valor);
 			for(int i = 0; i<servidores.length; i++) {
 				this.servidores[i].sacar(valor);
 			}

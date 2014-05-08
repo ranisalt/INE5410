@@ -8,17 +8,12 @@ public class Principal {
 public static void main(String[] args) {
 	PipedOutputStream deposito, saque, correcao;
 	PipedInputStream inDeposito, inSaque, inCorrecao;
-	Servidor[] servidores = new Servidor[3]; 
-	
-
+	Acao[] acoes = new Acao[3]; 
+	Agencia[] agencias = new Agencia[3];
 	deposito = new PipedOutputStream();
 	saque = new PipedOutputStream();
 	correcao = new PipedOutputStream();
 
-	for(int i = 0; i < 3; i++) {
-		Servidor servidor = new Servidor("Servidor"+i);
-		servidores[i] = servidor;
-	}
 	
 	try{
 		//criando pipedOutputStream
@@ -26,22 +21,36 @@ public static void main(String[] args) {
 		inSaque = new PipedInputStream(saque);
 		inCorrecao = new PipedInputStream(correcao);
 		
-		Acao acao = new Acao(inDeposito, inSaque, inCorrecao, servidores);
+		acoes[0] = new Acao(inDeposito, "deposito");
+		acoes[1] = new Acao(inSaque, "saque");
+		acoes[2] = new Acao(inCorrecao, "correcao");
 		
 		Cliente cliente1 = new Cliente(deposito, 10);
 		Cliente cliente2 = new Cliente(saque, 3);
 		Cliente cliente3 = new Cliente(correcao, 10);
 		
+		for(int i = 0; i < 3; i++){
+			agencias[i] = new Agencia("Servidor"+i,acoes);
+		}
+		
 		cliente1.run();
 		cliente2.run();
 		cliente3.run();
-		acao.run();
+		
+		agencias[0].iniciarOperacoes();
+		agencias[1].iniciarOperacoes();
+		agencias[2].iniciarOperacoes();
+		
 		
 		
 		
 	}catch(IOException e) {
 
 	}
+	
+	System.out.println(agencias[0].getServidor());
+	System.out.println(agencias[1].getServidor());
+	System.out.println(agencias[2].getServidor());
 }
 	
 

@@ -5,76 +5,64 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 
 public class Acao extends Thread {
-	private Servidor[] servidores = new Servidor[3];
-	private DataInputStream deposito,saque,correcao;
+	private Servidor servidor;
+	private DataInputStream input;
+	private String acao;
 	private int fim;
 	private int limiteOperacoes = 40;
 
-	public Acao(PipedInputStream deposito, PipedInputStream saque, PipedInputStream correcao, Servidor[] servidores)  {
-		this.servidores = servidores;
-		this.deposito = new DataInputStream(deposito);
-		this.saque = new DataInputStream(saque);
-		this.correcao = new DataInputStream(correcao);
+	public Acao(PipedInputStream in, String acao)  {
+		this.acao = acao.toLowerCase();
+		this.input = new DataInputStream(in);
 		this.fim = 0;
 
 	}
 	@Override
 	public void run() {
+		int deposito = 0;
+		int saque = 0;
+		int correcao = 0;
 		while(this.fim != this.limiteOperacoes) {
 			try{
-				int deposito = this.lerDeposito();
-				int saque = this.lerSaque();
-				int correcao = this.lerCorrecao();
-
-				if(saque != 0 && correcao != 0 && deposito != 0){
-					System.out.println("-----------------------\n"+"Operação "+fim+"\n"+"-----------------------"+"\n");
-					for(int i = 0; i < 3; i++) {
-						servidores[i].depositar(deposito);
-						servidores[i].sacar(saque);
-						servidores[i].correcao(correcao);
-
+				switch(this.acao){
+				case "deposito": 
+					while(deposito == 0){
+						deposito = this.lerInput();
 					}
-					this.fim++;	
+					this.servidor.depositar(deposito);
+					break;
+				case "saque": 
+					while(saque == 0){
+						saque = this.lerInput();
+					}
+					this.servidor.sacar(saque);
+					break;
+				case "correcao": 
+					while(correcao == 0){
+						correcao = this.lerInput();
+					}
+					this.servidor.depositar(correcao);
+					break;
 				}
-			}catch(Exception e) {
+				this.fim++;	
+				}catch(Exception e) {
 
+				}
 			}
-
 		}
-		System.out.println("Fim das operações!\n");
-		for(int i = 0; i < 3; i++) {
 
-			System.out.println(servidores[i].toString());;
-
-		}
-	}
-
-	public int lerDeposito() {
+	public int lerInput() {
 		try {
-			return deposito.read();
+			return input.read();
 		} catch (IOException e) {
 			System.out.println("exception Thread servidor"+this.getName());
 			e.printStackTrace();
 		}
 		return 0;
 	}
-	public int lerSaque() {
-		try {
-			return saque.read();
-		} catch (IOException e) {
-			System.out.println("exception Thread servidor"+this.getName());
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	public int lerCorrecao() {
-		try {
-			return correcao.read();
-		} catch (IOException e) {
-			System.out.println("exception Thread servidor"+this.getName());
-			e.printStackTrace();
-		}
-		return 0;
+	
+	public void adicionarServidor(Servidor servidor){
+		this.servidor = servidor;
 	}
 
 

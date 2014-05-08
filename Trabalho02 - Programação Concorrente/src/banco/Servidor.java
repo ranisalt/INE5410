@@ -13,7 +13,7 @@ public class Servidor {
 		this.saldo+=deposito;
 	}
 	
-	public void retirar (int saque) {
+	public void sacar (int saque) {
 		this.saldo-=saque;
 	}
 	

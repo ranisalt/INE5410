@@ -15,25 +15,25 @@ public class Principal {
 		}
 		
 		PipedOutputStream deposito = new PipedOutputStream();
-		PipedOutputStream retirada = new PipedOutputStream();
+		PipedOutputStream saque = new PipedOutputStream();
 		PipedOutputStream correcao = new PipedOutputStream();
 		
 		try {
 			PipedInputStream entrada1 = new PipedInputStream(deposito);
-			PipedInputStream entrada2 = new PipedInputStream(retirada);
+			PipedInputStream entrada2 = new PipedInputStream(saque);
 			PipedInputStream entrada3 = new PipedInputStream(correcao);
 		
 			//criando ThreadServidor
-			ThreadServidor tServidor1 = new ThreadServidor(entrada1, servidores);
-			ThreadServidor tServidor2 = new ThreadServidor(entrada2, servidores);
-			ThreadServidor tServidor3 = new ThreadServidor(entrada3, servidores);
+			Deposito tServidor1 = new Deposito(entrada1, servidores);
+			Saque tServidor2 = new Saque(entrada2, servidores);
+			Correcao tServidor3 = new Correcao(entrada3, servidores);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//criando clientes
 		Cliente cliente1 = new Cliente(deposito, 10);
-		Cliente cliente2 = new Cliente(retirada, 3);
+		Cliente cliente2 = new Cliente(saque, -3);
 		Cliente cliente3 = new Cliente(correcao, 10);
 		
 	}

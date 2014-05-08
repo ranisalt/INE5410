@@ -5,38 +5,31 @@ import java.io.IOException;
 import java.io.PipedOutputStream;
 
 public class Cliente extends Thread {
-	private DataOutputStream saida1;
-	private DataOutputStream saida2;
-	private DataOutputStream saida3;
+	private DataOutputStream saida;
 	private int valorSaida;
+	private int fim;
+	private int limiteOperacoes = 40;
 	
-	public Cliente(PipedOutputStream saida1, PipedOutputStream saida2, PipedOutputStream saida3, int valorSaida) {
-		this.saida1 = new DataOutputStream(saida1);
-		this.saida1 = new DataOutputStream(saida2);
-		this.saida1 = new DataOutputStream(saida3);
+	public Cliente(PipedOutputStream saida1, int valorSaida) {
+		this.saida = new DataOutputStream(saida1);
 		this.valorSaida = valorSaida;
+		this.fim = 0;
 	}
 	
 	@Override
 	public void run() {
-		while(true){
+		while(this.fim != this.limiteOperacoes){
+			
 			this.enviarValor();
-			try{
-				sleep(1000);
-			}catch(InterruptedException e) {
-				
-			}
+			this.fim++;
+			
 		}
 	}
 	
 	public void enviarValor() {
 		try {
-			saida1.writeInt(this.valorSaida);
-			saida1.flush();
-			saida2.write(this.valorSaida);
-			saida2.flush();
-			saida3.write(this.valorSaida);
-			saida3.flush();
+			saida.writeInt(this.valorSaida);
+			saida.flush();
 		} catch (IOException e) {
 			System.out.println("Caiu no catch do cliente");
 			e.printStackTrace();

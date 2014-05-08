@@ -23,4 +23,8 @@ public class Servidor {
 		System.out.println(this.nome+" corrigindo o saldo em "+percentagem+"%\n");
 		this.saldo += (this.saldo/100)*percentagem;
 	}
+	
+	public String toString() {
+		return "R$"+this.saldo;
+	}
 }

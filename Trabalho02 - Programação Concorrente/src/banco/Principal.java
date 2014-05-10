@@ -5,36 +5,62 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 public class Principal {
-
 	public static void main(String[] args) {
-		Servidor[] servidores = new Servidor[3]; 
-		for(int i=1; i == 3 ; i++) {
-			//criando servidores
-			Servidor servidor = new Servidor("Servidor"+i);
-			servidores[--i] = servidor;
-		}
-		
-		PipedOutputStream deposito = new PipedOutputStream();
-		PipedOutputStream retirada = new PipedOutputStream();
-		PipedOutputStream correcao = new PipedOutputStream();
-		
-		try {
-			PipedInputStream entrada1 = new PipedInputStream(deposito);
-			PipedInputStream entrada2 = new PipedInputStream(retirada);
-			PipedInputStream entrada3 = new PipedInputStream(correcao);
-		
-			//criando ThreadServidor
-			ThreadServidor tServidor1 = new ThreadServidor(entrada1, servidores);
-			ThreadServidor tServidor2 = new ThreadServidor(entrada2, servidores);
-			ThreadServidor tServidor3 = new ThreadServidor(entrada3, servidores);
+		PipedOutputStream[] pipesSaidaDeposito = new PipedOutputStream[3];
+		PipedInputStream[] pipesEntradaDeposito = new PipedInputStream[3];
+		PipedOutputStream[] pipesSaidaSaque = new PipedOutputStream[3];
+		PipedInputStream[] pipesEntradaSaque = new PipedInputStream[3];
+		PipedOutputStream[] pipesSaidaCorrecao = new PipedOutputStream[3];
+		PipedInputStream[] pipesEntradaCorrecao = new PipedInputStream[3];
+		Operacao[] operacoesDeposito = new Operacao[3];
+		Operacao[] operacoesSaque = new Operacao[3];
+		Operacao[] operacoesCorrecao = new Operacao[3];
+		Servidor[] servidores = new Servidor[3];
+		try{
+			for(int i = 0; i < 3; i++) {
+				servidores[i] = new Servidor("Servidor "+i);
+				//Criando pipes de saída de cada operação
+				pipesSaidaDeposito[i] = new PipedOutputStream();
+				pipesSaidaSaque[i] = new PipedOutputStream();
+				pipesSaidaCorrecao[i] = new PipedOutputStream();
+				//Criando pipes de entrada de cada operacao e fazendo o link com as suas respectivas saídas
+				pipesEntradaDeposito[i] = new PipedInputStream(pipesSaidaDeposito[i]);
+				pipesEntradaSaque[i] = new PipedInputStream(pipesSaidaSaque[i]);
+				pipesEntradaCorrecao[i] = new PipedInputStream(pipesSaidaCorrecao[i]);
+				//Criando objetos Operação, determinando suas funções por parâmetro e adicionando os seus servidores
+				operacoesDeposito[i] = new Operacao(pipesEntradaDeposito[i], "deposito");
+				operacoesDeposito[i].adicionarServidor(servidores[i]);
+				
+				operacoesSaque[i] = new Operacao(pipesEntradaSaque[i], "saque");
+				operacoesSaque[i].adicionarServidor(servidores[i]);
+				
+				operacoesCorrecao[i] = new Operacao(pipesEntradaCorrecao[i], "correcao");
+				operacoesCorrecao[i].adicionarServidor(servidores[i]);
+			}
+
+			for(int i = 0; i < 3; i++){
+				operacoesDeposito[i].start();
+				operacoesSaque[i].start();
+				operacoesCorrecao[i].start();
+
+			}
+			Cliente um = new Cliente(pipesSaidaDeposito, 10);		
+			Cliente dois = new Cliente(pipesSaidaSaque, 3);
+			Cliente tres = new Cliente(pipesSaidaCorrecao, 10);
+			um.start();
+			dois.start();
+			tres.start();
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+			
+			System.out.println(servidores[0].toString());
+
+
+
+
+		}catch(IOException e) {
+
 		}
-		//criando clientes
-		Cliente cliente1 = new Cliente(deposito, 10);
-		Cliente cliente2 = new Cliente(retirada, 3);
-		Cliente cliente3 = new Cliente(correcao, 10);
-		
 	}
+
+
 }

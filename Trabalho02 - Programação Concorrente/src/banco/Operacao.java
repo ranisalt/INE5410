@@ -8,6 +8,7 @@ public class Operacao extends Thread {
 	private Servidor servidor;
 	private PipedInputStream input;
 	private String acao;
+	int operacoesFeitas = 0;
 
 	public Operacao(PipedInputStream in, String acao)  {
 		this.acao = acao.toLowerCase();
@@ -20,21 +21,29 @@ public class Operacao extends Thread {
 			int saque = 0;
 			int correcao = 0;
 			int deposito = 0;
-			while((deposito=this.lerInput()) != -1 && (correcao = this.lerInput())!=-1 && (saque = this.lerInput())!=-1){
-				switch(this.acao){
-				case "deposito": 
+
+			switch(this.acao){
+			case "deposito": 
+				while((deposito=this.lerInput()) != -1){
 					this.servidor.depositar(deposito);
-					break;
-				case "saque": 
-					this.servidor.sacar(saque);
-					break;
-				case "correcao": 
-					this.servidor.correcao(correcao);
-					break;
+					this.operacoesFeitas++;
 				}
+				break;
+			case "saque": 
+				while((saque=this.lerInput()) != -1){
+					this.servidor.sacar(saque);
+					this.operacoesFeitas++;
+				}
+				break;
+			case "correcao": 
+				while((correcao=this.lerInput()) != -1){
+					this.servidor.correcao(correcao);
+					this.operacoesFeitas++;
+				}
+				break;
 			}
 			this.input.close();
-			System.out.println(this.acao+" encerrados"+this.servidor.toString());
+			System.out.println(this.acao+" encerrados"+this.servidor.toString()+" ================ COM "+this.operacoesFeitas+" OPERACOES");
 		}catch(Exception e) {
 
 		}

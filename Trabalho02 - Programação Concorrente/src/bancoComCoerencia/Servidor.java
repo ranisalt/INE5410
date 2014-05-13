@@ -4,27 +4,33 @@ public class Servidor {
 	
 	private double saldo;
 	private String nome;
+	public double correcao;
 	
 	public Servidor(String nome){
 		this.nome = nome;
 		this.saldo = 0;
+		this.correcao = 0;
 	}
-	public void depositar (int deposito) {
-		System.out.println(this.nome+" depositando o valor R$"+deposito+"\n");
+	public void depositar (double deposito) {
 		this.saldo+=deposito;
 	}
 	
 	public void sacar (int saque) {
-		System.out.println(this.nome+" sacando o valor R$"+saque+"\n");
 		this.saldo-=saque;
 	}
 	
 	public void correcao (int percentagem) {
-		System.out.println(this.nome+" corrigindo o saldo em "+percentagem+"%\n");
+		correcao += (this.saldo/100)*percentagem;
 		this.saldo += (this.saldo/100)*percentagem;
+		
+	}
+	
+	public String getNome() {
+		return this.nome;
 	}
 	
 	public String toString() {
 		return this.nome+" R$"+this.saldo;
 	}
 }
+

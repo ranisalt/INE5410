@@ -28,33 +28,31 @@ public class Principal {
 				pipesEntradaSaque[i] = new PipedInputStream(pipesSaidaSaque[i]);
 				pipesEntradaCorrecao[i] = new PipedInputStream(pipesSaidaCorrecao[i]);
 				//Criando objetos Operação, determinando suas funções por parâmetro e adicionando os seus servidores
-				operacoesDeposito[i] = new Operacao(pipesEntradaDeposito[i], "deposito");
-				operacoesDeposito[i].adicionarServidor(servidores[i]);
+				operacoesDeposito[i] = new Operacao(pipesEntradaDeposito[i], "deposito", i);
+				operacoesDeposito[i].adicionarServidor(servidores);
 				
-				operacoesSaque[i] = new Operacao(pipesEntradaSaque[i], "saque");
-				operacoesSaque[i].adicionarServidor(servidores[i]);
+				operacoesSaque[i] = new Operacao(pipesEntradaSaque[i], "saque", i);
+				operacoesSaque[i].adicionarServidor(servidores);
 				
-				operacoesCorrecao[i] = new Operacao(pipesEntradaCorrecao[i], "correcao");
-				operacoesCorrecao[i].adicionarServidor(servidores[i]);
+				operacoesCorrecao[i] = new Operacao(pipesEntradaCorrecao[i], "correcao", i);
+				operacoesCorrecao[i].adicionarServidor(servidores);
 			}
 
 			for(int i = 0; i < 3; i++){
 				operacoesDeposito[i].start();
 				operacoesSaque[i].start();
 				
-
 			}
+			operacoesCorrecao[0].start();
 			Cliente um = new Cliente(pipesSaidaDeposito, 10);		
 			Cliente dois = new Cliente(pipesSaidaSaque, 3);
 			Cliente tres = new Cliente(pipesSaidaCorrecao, 10);
 			um.start();
 			dois.start();
-			Thread.sleep(100);
-			for(int i=0; i<3; i++){
-				operacoesCorrecao[i].start();
-			}
 			tres.start();
-			
+			Thread.sleep(100);
+			operacoesCorrecao[1].start();
+			operacoesCorrecao[2].start();
 			Thread.sleep(100);
 			System.out.println("\n\n\n\n\n\n"+servidores[0].toString());
 			System.out.println(servidores[1].toString());

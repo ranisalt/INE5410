@@ -1,4 +1,4 @@
-package banco;
+package bancoComCoerencia;
 
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -41,7 +41,7 @@ public class Principal {
 			for(int i = 0; i < 3; i++){
 				operacoesDeposito[i].start();
 				operacoesSaque[i].start();
-				operacoesCorrecao[i].start();
+				
 
 			}
 			Cliente um = new Cliente(pipesSaidaDeposito, 10);		
@@ -49,6 +49,10 @@ public class Principal {
 			Cliente tres = new Cliente(pipesSaidaCorrecao, 10);
 			um.start();
 			dois.start();
+			Thread.sleep(100);
+			for(int i=0; i<3; i++){
+				operacoesCorrecao[i].start();
+			}
 			tres.start();
 			
 			Thread.sleep(100);

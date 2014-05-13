@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 
 public class Operacao extends Thread {
-	private Servidor[] servidores = new Servidor[3];
-	private DataInputStream input;
+	private Servidor servidor;
+	private PipedInputStream input;
 	private String acao;
-	private int operacoesFeitas;
+	int operacoesFeitas = 0;
 
 	public Operacao(PipedInputStream in, String acao)  {
 		this.acao = acao.toLowerCase();
-		this.input = new DataInputStream(in);
-		this.operacoesFeitas=0;
+		this.input = in;
+
 	}
 	@Override
 	public void run() {
@@ -25,33 +25,25 @@ public class Operacao extends Thread {
 			switch(this.acao){
 			case "deposito": 
 				while((deposito=this.lerInput()) != -1){
-					this.servidores[0].depositar(deposito);
-					this.servidores[1].depositar(deposito);
-					this.servidores[2].depositar(deposito);
+					this.servidor.depositar(deposito);
 					this.operacoesFeitas++;
 				}
 				break;
 			case "saque": 
 				while((saque=this.lerInput()) != -1){
-					this.servidores[0].sacar(saque);
-					this.servidores[1].sacar(saque);
-					this.servidores[2].sacar(saque);	
+					this.servidor.sacar(saque);
 					this.operacoesFeitas++;
 				}
 				break;
 			case "correcao": 
 				while((correcao=this.lerInput()) != -1){
-					this.servidores[0].correcao(correcao);
-					this.servidores[1].correcao(correcao);
-					this.servidores[2].correcao(correcao);	
+					this.servidor.correcao(correcao);
 					this.operacoesFeitas++;
 				}
 				break;
 			}
 			this.input.close();
-			System.out.println(this.acao+" encerrados"+this.servidores[0].toString()+"================ COM "+this.operacoesFeitas+" OPERACOES");
-			System.out.println(this.acao+" encerrados"+this.servidores[1].toString()+"================ COM "+this.operacoesFeitas+" OPERACOES");
-			System.out.println(this.acao+" encerrados"+this.servidores[2].toString()+"================ COM "+this.operacoesFeitas+" OPERACOES");
+			//System.out.println(this.acao+" encerrados"+this.servidor.toString()+" ================ COM "+this.operacoesFeitas+" OPERACOES");
 		}catch(Exception e) {
 
 		}
@@ -68,12 +60,12 @@ public class Operacao extends Thread {
 		return 0;
 	}
 
-	public void adicionarServidor(Servidor[] servidores){
-		this.servidores = servidores;
+	public void adicionarServidor(Servidor servidor){
+		this.servidor = servidor;
 	}
 
-	public Servidor[] getServidor(){
-		return this.servidores;
+	public Servidor getServidor(){
+		return this.servidor;
 	}
 
 

@@ -43,7 +43,7 @@ public class Operacao extends Thread {
 				break;
 			}
 			this.input.close();
-			System.out.println(this.acao+" encerrados"+this.servidor.toString()+" ================ COM "+this.operacoesFeitas+" OPERACOES");
+			//System.out.println(this.acao+" encerrados"+this.servidor.toString()+" ================ COM "+this.operacoesFeitas+" OPERACOES");
 		}catch(Exception e) {
 
 		}

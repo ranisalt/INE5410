@@ -25,6 +25,6 @@ public class Servidor {
 	}
 	
 	public String toString() {
-		return this.nome+" R$"+(int)this.saldo;
+		return this.nome+" R$"+this.saldo;
 	}
 }

@@ -25,10 +25,6 @@ public class Servidor {
 	}
 	
 	public String toString() {
-<<<<<<< HEAD:Trabalho02 - Programação Concorrente/src/banco/Servidor.java
-		return this.nome+" R$"+this.saldo;
-=======
-		return "R$"+this.saldo;
->>>>>>> 9c7dff57780fb8a7b57ac48a3b39e33fdb60e0e5:Trabalho02 - Programação Concorrente/src/teste/Servidor.java
+		return this.nome+" R$"+(int)this.saldo;
 	}
 }

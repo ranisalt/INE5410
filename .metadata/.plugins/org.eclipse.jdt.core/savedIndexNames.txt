@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+/home/matheusb/INE5410/.metadata/.plugins/org.eclipse.jdt.core
-1576194848.index
-990687336.index
-3535258683.index

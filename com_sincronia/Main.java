@@ -79,7 +79,7 @@ public class Main {
 			for (Servidor s : servidores)
 				System.out.println(s.toString());
 		} catch (IOException e) {
-
+			System.err.println("==> Catch " + e.getClass().getName() + " em main()");
 		}
 	}
 

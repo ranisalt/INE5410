@@ -20,7 +20,7 @@ public class Cliente extends Thread {
 			for (int i = 0; i < 3; i++)
 				this.saidas.get(i).close();
 		} catch (Exception e) {
-			System.out.println("==> Catch " + e.getClass().getName() + " em "
+			System.err.println("==> Catch " + e.getClass().getName() + " em "
 					+ this.getName() + "::run()");
 		}
 	}
@@ -32,8 +32,8 @@ public class Cliente extends Thread {
 				p.flush();
 			}
 		} catch (IOException e) {
-			System.err.println("==> Catch " + e.getClass().getName() + " em "
-					+ this.getName() + "::enviar()");
+			System.err.println("==> Catch IOException em " + this.getName()
+					+ "::enviar()");
 			e.printStackTrace();
 		}
 	}

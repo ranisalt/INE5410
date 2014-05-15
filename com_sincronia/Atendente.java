@@ -14,29 +14,27 @@ public class Atendente extends Thread {
 	}
 
 	public void run() {
+		int v;
 		try {
-			int v;
 			switch (this.op) {
 			case 'c':
-				while ((v = this.ler()) != -1) {
+				while ((v = this.ler()) != -1)
 					this.servidor.correcao(v);
-				}
 				break;
 
 			case 'd':
-				while ((v = this.ler()) != -1) {
+				while ((v = this.ler()) != -1)
 					this.servidor.deposito(v);
-				}
 				break;
 			case 'r':
-				while ((v = this.ler()) != -1) {
+				while ((v = this.ler()) != -1)
 					this.servidor.saque(v);
-				}
 				break;
 			}
 			this.input.close();
 		} catch (Exception e) {
-			System.out.println("==> Catch " + e.getClass().getName() + " em " + this.getName() + "::run()");
+			System.err.println("==> Catch " + e.getClass().getName() + " em "
+					+ this.getName() + "::run()");
 		}
 	}
 
@@ -44,7 +42,8 @@ public class Atendente extends Thread {
 		try {
 			return input.read();
 		} catch (IOException e) {
-			System.out.println("==> Catch " + e.getClass().getName() + " em " + this.getName() + "::ler()");
+			System.err.println("==> Catch " + e.getClass().getName() + " em "
+					+ this.getName() + "::ler()");
 			e.printStackTrace();
 		}
 		return 0;

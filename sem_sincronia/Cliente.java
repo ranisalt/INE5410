@@ -20,7 +20,7 @@ public class Cliente extends Thread {
 			for (int i = 0; i < 3; i++)
 				this.saidas.get(i).close();
 		} catch (Exception e) {
-			System.out.println("==> Catch " + e.getClass().getName() + " em "
+			System.err.println("==> Catch " + e.getClass().getName() + " em "
 					+ this.getName() + "::run()");
 		}
 	}

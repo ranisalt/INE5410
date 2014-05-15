@@ -1,4 +1,4 @@
-package sem_sincronia;
+package com_sincronia;
 
 import java.io.IOException;
 import java.io.PipedInputStream;

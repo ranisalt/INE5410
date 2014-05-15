@@ -1,4 +1,4 @@
-package sem_sincronia;
+package com_sincronia;
 
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -48,7 +48,7 @@ public class Main {
 
 			/* Iniciar os atendentes */
 			for (int i = 0; i < 3; ++i)
-				for (int j = 0; j < 3; ++j)
+				for (int j = 1; j < 3; ++j)
 					atendentes.get(i).get(j).start();
 
 			/* Instanciar os clientes com seus valores */
@@ -61,12 +61,20 @@ public class Main {
 				clientes.add(new Cliente(l, val[i]));
 			}
 
-			/* Iniciar os clientes */
-			for (int i = 0; i < 3; ++i)
+			/* Iniciar os clientes, exceto o de correção */
+			for (int i = 1; i < 3; ++i)
 				clientes.get(i).start();
 
 			esperar(clientes, atendentes);
 
+			/* Iniciar os atendentes e o cliente de correção */
+			for (int j = 0; j < 3; ++j)
+				atendentes.get(j).get(0).start();
+			clientes.get(0).start();
+
+			esperar(clientes, atendentes);
+
+			/* Printar os resultados */
 			System.out.println("==> Término");
 			for (Servidor s : servidores)
 				System.out.println(s.toString());

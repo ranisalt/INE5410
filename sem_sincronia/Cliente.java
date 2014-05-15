@@ -1,3 +1,5 @@
+package sem_sincronia;
+
 import java.io.IOException;
 import java.io.PipedOutputStream;
 import java.util.List;
@@ -11,9 +13,7 @@ public class Cliente extends Thread {
 		this.val = val;
 	}
 
-	@Override
 	public void run() {
-
 		for (int i = 0; i < 40; ++i) {
 			this.enviar();
 		}
@@ -33,7 +33,7 @@ public class Cliente extends Thread {
 				p.flush();
 			}
 		} catch (IOException e) {
-			System.out.println("Caiu no catch do cliente");
+			System.err.println("==> Catch IOException em " + this.getName() + "::enviar()");
 			e.printStackTrace();
 		}
 	}
